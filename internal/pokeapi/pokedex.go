@@ -1,6 +1,7 @@
 package pokeapi
 
 import (
+	"sort"
 	"sync"
 )
 
@@ -30,8 +31,17 @@ func (p *Pokedex) Get(key string) (Pokemon, bool) {
 	return mon, ok
 }
 
-func (p *Pokedex) GetAll() map[string]Pokemon {
+func (p *Pokedex) GetAll() []Pokemon {
 	p.mux.Lock()
 	defer p.mux.Unlock()
-	return p.caught
+
+	var pokemonList []Pokemon
+	for _, pokemon := range p.caught {
+		pokemonList = append(pokemonList, pokemon)
+	}
+	sort.Slice(pokemonList, func(i, j int) bool {
+		return pokemonList[i].ID < pokemonList[j].ID
+	})
+
+	return pokemonList
 }
