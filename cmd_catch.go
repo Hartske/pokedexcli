@@ -13,7 +13,7 @@ func commandCatch(cfg *config, args ...string) error {
 
 	pokemonRes, err := cfg.pokeapiClient.GetPokemon(&args[0])
 	if err != nil {
-		return err
+		return errors.New("Pokemon doesn't exist")
 	}
 
 	name := pokemonRes.Species.Name
