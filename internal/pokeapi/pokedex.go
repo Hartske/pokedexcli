@@ -29,3 +29,9 @@ func (p *Pokedex) Get(key string) (Pokemon, bool) {
 	mon, ok := p.caught[key]
 	return mon, ok
 }
+
+func (p *Pokedex) GetAll() map[string]Pokemon {
+	p.mux.Lock()
+	defer p.mux.Unlock()
+	return p.caught
+}
