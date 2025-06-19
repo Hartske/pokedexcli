@@ -22,3 +22,10 @@ func (p *Pokedex) Add(key string, mon Pokemon) {
 	defer p.mux.Unlock()
 	p.caught[key] = mon
 }
+
+func (p *Pokedex) Get(key string) (Pokemon, bool) {
+	p.mux.Lock()
+	defer p.mux.Unlock()
+	mon, ok := p.caught[key]
+	return mon, ok
+}
